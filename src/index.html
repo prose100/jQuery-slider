@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery Boilerplate</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div id="slider" class="clearfix">
+			<ul class="slides">
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<ul class="controls">
+				<li><img src="prev.png" alt="previous"></li>
+				<li><img src="next.png" alt="next"></li>
+			</ul>
+			<ul class="pagination">
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="jquery.boilerplate.js"></script>
+		<script>
+			$(function() {
+				$("#slider").defaultPluginName( {
+					propertyName: "a custom value"
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -48,7 +48,7 @@
 			yourOtherFunction: function( text ) {
 
 				// some logic
-				$( this.element ).text( text );
+				// $( this.element ).text( text );
 			}
 		} );
 
