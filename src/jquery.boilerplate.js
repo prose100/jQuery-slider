@@ -47,54 +47,91 @@
 				// you can add more functions like the one below and
 				// call them like the example below
 				this.setProperties();
-				this.slideRight();
-				this.slideLeft();				
+				this.slideParameters.setCurrentSlideNumber.call(this, 1);
+				this.events.clickRight.call(this);
+				this.events.clickLeft.call(this);
+				this.events.clickPage.call(this);
+			},						
+			events: {
+				clickRight: function() {
+							var _this = this;
+							$(_this._defaults.controlsClass+" "+"li:last-child").click(
+								function() {
+									if (_this.slideParameters.getCurrentSlideNumber.call(_this) == _this.slideParameters.getNumberOfSlides.call(_this)) {
+										//go to first slide, when slideshow has reached max distance
+										$(_this._defaults.slidesClass).animate({right: '0%'}, 500);
+										_this.slideParameters.setCurrentSlideNumber.call(_this, 1);
+										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
+									} else {
+										//go to next slide
+										$(_this._defaults.slidesClass).animate({right: '+=100%'}, 500);
+										_this.slideParameters.setCurrentSlideNumber.call(_this, _this.slideParameters.getCurrentSlideNumber.call(_this)+1);
+										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
+									}
+								})
+				},
+				clickLeft: 	function() {
+							var _this = this;
+							$(_this._defaults.controlsClass + " " + "li:first-child").click(	
+								function() {
+									if (_this.slideParameters.getCurrentSlideNumber.call(_this) == 1) {
+										//go to first slide, when slideshow has reached max distance
+										$(_this._defaults.slidesClass).animate({right: (_this.slideParameters.getMaxSlidePercentage.call(_this)-100).toString()+"%"}, 500);
+										_this.slideParameters.setCurrentSlideNumber.call(_this, _this.slideParameters.getNumberOfSlides.call(_this));
+										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
+									} else {
+										//go to next slide
+										$(_this._defaults.slidesClass).animate({right: '-=100%'}, 500);
+										_this.slideParameters.setCurrentSlideNumber.call(_this, _this.slideParameters.getCurrentSlideNumber.call(_this)-1);
+										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
+									}
+								})
+				},
+				clickPage: function() {
+							var _this = this;
+							$(_this._defaults.paginationClass + " " + "li").click(
+								function() {
+									var currentSlideNumber = $(this).index()+1;
+									$(_this._defaults.slidesClass).animate({right: ((currentSlideNumber-1)*100).toString()+"%"}, 500)
+									_this.paginate(currentSlideNumber);
+								})
+				}
 			},
-			slideRight: function() {
-						var _this = this;
-						$(_this._defaults.controlsClass+" "+"li:last-child").click(
-							function() {
-								if (Math.abs((_this.convertStringToInteger($(_this._defaults.slidesClass).css("right")))-
-									 (_this.getMaxSlideDistance())) < 30) {
-									//go to first slide, when slideshow has reached max distance
-									$(_this._defaults.slidesClass).animate({right: '0%'}, 500);
-								} else {
-									//go to next slide
-									$(_this._defaults.slidesClass).animate({right: '+=100%'}, 500);
-								}
-							})
+			paginate: function(currentSlideNumber) {
+				var i;
+				var total = this.slideParameters.getNumberOfSlides.call(this);
+				for (i=1; i<=total; i++) {
+					$(this._defaults.paginationClass + " " + "li:nth-child"+ "(" + i.toString() + ")").removeClass('active');
+				}
+				$(this._defaults.paginationClass + " " + "li:nth-child"+ "(" + currentSlideNumber.toString() + ")").addClass('active');
+				this.slideParameters.setCurrentSlideNumber.call(this, currentSlideNumber);
 			},
-			slideLeft: 	function() {
-						var _this = this;
-						$(_this._defaults.controlsClass + " " + "li:first-child").click(	
-							function() {
-								if ((_this.convertStringToInteger($(_this._defaults.slidesClass).css("right"))) < 30) {
-									//go to last slide, when slideshow has reached starting point
-									$(_this._defaults.slidesClass).animate({right: (_this.getMaxSlidePercentage()-100).toString()+"%"}, 500);
-								} else {
-									//go to next slide
-									$(_this._defaults.slidesClass).animate({right: '-=100%'}, 500);
-								}
-							})
-			},
-			getNumberOfSlides: function() {
-				return $(this._defaults.slidesClass).children().length
-			},
-			getSlideWidth: function() {
-				return $(this._defaults.slidesClass + " " + "li").width()
-			},
-			getMaxSlideDistance: function() {
-				return ((this.getNumberOfSlides()-1)*this.getSlideWidth())
-			},
-			getMaxSlidePercentage: function() {
-				return this.getNumberOfSlides()*100
+			slideParameters: {
+				setCurrentSlideNumber: function(currentSlideNumber) {
+					this.currentSlideNumber = currentSlideNumber;
+				},
+				getCurrentSlideNumber: function() {
+					return this.currentSlideNumber;
+				},
+				getNumberOfSlides: function() {
+					return $(this._defaults.slidesClass).children().length
+				},
+				getSlideWidth: function() {
+					return $(this._defaults.slidesClass + " " + "li").width()
+				},
+				getMaxSlideDistance: function() {
+					return ((this.getNumberOfSlides()-1)*this.getSlideWidth())
+				},
+				getMaxSlidePercentage: function() {
+					return this.slideParameters.getNumberOfSlides.call(this)*100
+				},
 			},
 			convertStringToInteger: function(string) {
 				return parseInt((string).replace(/[^0-9.]/g, ''))
 			},
 			setProperties: function() {
-				$(this._defaults.slidesClass).css("width", this.getMaxSlidePercentage().toString()+"%");
-				$(this._defaults.slidesClass+" "+"li").css("width", (100/this.getNumberOfSlides()).toString()+"%")
+				$(this._defaults.slidesClass).css('width', this.slideParameters.getMaxSlidePercentage.call(this).toString()+"%");
+				$(this._defaults.slidesClass+" "+"li").css('width', (100/this.slideParameters.getNumberOfSlides.call(this).toString()+"%"))
 			}
 		});
 

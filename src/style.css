@@ -29,7 +29,7 @@
 	position: absolute;
 	bottom: 15px;
 	left: 50%;
-	margin-left: -33px;
+	margin-left: -60px;
 }
 
 .pagination li {
@@ -40,6 +40,10 @@
 	border-radius: 12px;
 	cursor: pointer;
 	margin-right: 15px;
+}
+
+.pagination li.active {
+	background-color: #000;
 }
 
 /* ---------------------------------------------
