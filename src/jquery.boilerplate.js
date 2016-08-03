@@ -16,18 +16,21 @@
 		// Create the defaults once
 		var pluginName = "defaultPluginName",
 			defaults = {
-				propertyName: "value"
+				propertyName: "value",
+				controlsClass: ".controls",
+				slidesClass: ".slides",
+				paginationClass: ".pagination"
 			};
 
 		// The actual plugin constructor
-		function Plugin ( element, options ) {
+		function Plugin (element, options) {
 			this.element = element;
 
 			// jQuery has an extend method which merges the contents of two or
 			// more objects, storing the result in the first object. The first object
 			// is generally empty as we don't want to alter the default options for
 			// future instances of the plugin
-			this.settings = $.extend( {}, defaults, options );
+			this.settings = $.extend({}, defaults, options);
 			this._defaults = defaults;
 			this._name = pluginName;
 			this.init();
@@ -43,14 +46,57 @@
 				// and this.settings
 				// you can add more functions like the one below and
 				// call them like the example below
-				this.yourOtherFunction( "jQuery Boilerplate" );
+				this.setProperties();
+				this.slideRight();
+				this.slideLeft();				
 			},
-			yourOtherFunction: function( text ) {
-
-				// some logic
-				// $( this.element ).text( text );
+			slideRight: function() {
+						var _this = this;
+						$(_this._defaults.controlsClass+" "+"li:last-child").click(
+							function() {
+								if (Math.abs((_this.convertStringToInteger($(_this._defaults.slidesClass).css("right")))-
+									 (_this.getMaxSlideDistance())) < 30) {
+									//go to first slide, when slideshow has reached max distance
+									$(_this._defaults.slidesClass).animate({right: '0%'}, 500);
+								} else {
+									//go to next slide
+									$(_this._defaults.slidesClass).animate({right: '+=100%'}, 500);
+								}
+							})
+			},
+			slideLeft: 	function() {
+						var _this = this;
+						$(_this._defaults.controlsClass + " " + "li:first-child").click(	
+							function() {
+								if ((_this.convertStringToInteger($(_this._defaults.slidesClass).css("right"))) < 30) {
+									//go to last slide, when slideshow has reached starting point
+									$(_this._defaults.slidesClass).animate({right: (_this.getMaxSlidePercentage()-100).toString()+"%"}, 500);
+								} else {
+									//go to next slide
+									$(_this._defaults.slidesClass).animate({right: '-=100%'}, 500);
+								}
+							})
+			},
+			getNumberOfSlides: function() {
+				return $(this._defaults.slidesClass).children().length
+			},
+			getSlideWidth: function() {
+				return $(this._defaults.slidesClass + " " + "li").width()
+			},
+			getMaxSlideDistance: function() {
+				return ((this.getNumberOfSlides()-1)*this.getSlideWidth())
+			},
+			getMaxSlidePercentage: function() {
+				return this.getNumberOfSlides()*100
+			},
+			convertStringToInteger: function(string) {
+				return parseInt((string).replace(/[^0-9.]/g, ''))
+			},
+			setProperties: function() {
+				$(this._defaults.slidesClass).css("width", this.getMaxSlidePercentage().toString()+"%");
+				$(this._defaults.slidesClass+" "+"li").css("width", (100/this.getNumberOfSlides()).toString()+"%")
 			}
-		} );
+		});
 
 		// A really lightweight plugin wrapper around the constructor,
 		// preventing against multiple instantiations

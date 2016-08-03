@@ -1,31 +1,17 @@
-ul {
-	list-style: none;
-	padding: 0;
-}
+
 
 #slider {
-	width: 500px;
-	height: 400px;
+	width: 50%;
 	overflow: hidden;
 	position: relative;
 }
 
-.slides li {
+.slides {
+	position: relative;
+}
+
+#slider .slides li {
 	float: left;
-	width: 500px;
-	height: 400px;
-}
-
-.slides li:nth-child(1) {
-	background-color:  #1B2D2D;
-}
-
-.slides li:nth-child(2) {
-	background-color: #9D5C63;
-}
-
-.slides li:nth-child(3) {
-	background-color: #553739;
 }
 
 .controls li {
@@ -41,7 +27,7 @@ ul {
 
 .pagination	{
 	position: absolute;
-	bottom: 0;
+	bottom: 15px;
 	left: 50%;
 	margin-left: -33px;
 }
@@ -52,7 +38,6 @@ ul {
 	height: 12px;
 	background-color: #ddd;
 	border-radius: 12px;
-	margin-bottom: 5px;
 	cursor: pointer;
 	margin-right: 15px;
 }
@@ -65,4 +50,9 @@ ul {
 	display: table;
 	content: "";
 	clear: both;
+}
+
+.responsive {
+	width: 100%;
+	height: auto;
 }
