@@ -16,10 +16,13 @@
 		// Create the defaults once
 		var pluginName = "defaultPluginName",
 			defaults = {
-				propertyName: "value",
+				slideSpeed: 500,
+				paginationWidth: "30px",
+				paginationHeight: "30px",
+				paginationSpacing: "15px",
 				controlsClass: ".controls",
 				slidesClass: ".slides",
-				paginationClass: ".pagination"
+				paginationClass: ".pagination",
 			};
 
 		// The actual plugin constructor
@@ -47,6 +50,7 @@
 				// you can add more functions like the one below and
 				// call them like the example below
 				this.setProperties();
+				this.positionPagination();
 				this.slideParameters.setCurrentSlideNumber.call(this, 1);
 				this.events.clickRight.call(this);
 				this.events.clickLeft.call(this);
@@ -55,56 +59,62 @@
 			events: {
 				clickRight: function() {
 							var _this = this;
-							$(_this._defaults.controlsClass+" "+"li:last-child").click(
+							$(this.settings.controlsClass+" "+"li:last-child").click(
 								function() {
-									if (_this.slideParameters.getCurrentSlideNumber.call(_this) == _this.slideParameters.getNumberOfSlides.call(_this)) {
+									if (_this.slideParameters.getCurrentSlideNumber.call(_this) === _this.slideParameters.getNumberOfSlides.call(_this)) {
 										//go to first slide, when slideshow has reached max distance
-										$(_this._defaults.slidesClass).animate({right: '0%'}, 500);
+										$(this.settings.slidesClass).animate({right: "0%"}, _this.settings.slideSpeed);
 										_this.slideParameters.setCurrentSlideNumber.call(_this, 1);
 										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
 									} else {
 										//go to next slide
-										$(_this._defaults.slidesClass).animate({right: '+=100%'}, 500);
+										$(this.settings.slidesClass).animate({right: "+=100%"}, _this.settings.slideSpeed);
 										_this.slideParameters.setCurrentSlideNumber.call(_this, _this.slideParameters.getCurrentSlideNumber.call(_this)+1);
 										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
 									}
-								})
+								});
 				},
 				clickLeft: 	function() {
 							var _this = this;
-							$(_this._defaults.controlsClass + " " + "li:first-child").click(	
+							$(this.settings.controlsClass + " " + "li:first-child").click(	
 								function() {
-									if (_this.slideParameters.getCurrentSlideNumber.call(_this) == 1) {
+									if (_this.slideParameters.getCurrentSlideNumber.call(_this) === 1) {
 										//go to first slide, when slideshow has reached max distance
-										$(_this._defaults.slidesClass).animate({right: (_this.slideParameters.getMaxSlidePercentage.call(_this)-100).toString()+"%"}, 500);
+										$(this.settings.slidesClass).animate({right: (_this.slideParameters.getMaxSlidePercentage.call(_this)-100).toString()+"%"}, _this.settings.slideSpeed);
 										_this.slideParameters.setCurrentSlideNumber.call(_this, _this.slideParameters.getNumberOfSlides.call(_this));
 										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
 									} else {
 										//go to next slide
-										$(_this._defaults.slidesClass).animate({right: '-=100%'}, 500);
+										$(this.settings.slidesClass).animate({right: "-=100%"}, _this.settings.slideSpeed);
 										_this.slideParameters.setCurrentSlideNumber.call(_this, _this.slideParameters.getCurrentSlideNumber.call(_this)-1);
 										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
 									}
-								})
+								});
 				},
 				clickPage: function() {
 							var _this = this;
-							$(_this._defaults.paginationClass + " " + "li").click(
+							$(this.settings.paginationClass + " " + "li").click(
 								function() {
 									var currentSlideNumber = $(this).index()+1;
-									$(_this._defaults.slidesClass).animate({right: ((currentSlideNumber-1)*100).toString()+"%"}, 500)
+									$(this.settings.slidesClass).animate({right: ((currentSlideNumber-1)*100).toString()+"%"}, 500);
 									_this.paginate(currentSlideNumber);
-								})
+								});
 				}
 			},
 			paginate: function(currentSlideNumber) {
 				var i;
 				var total = this.slideParameters.getNumberOfSlides.call(this);
 				for (i=1; i<=total; i++) {
-					$(this._defaults.paginationClass + " " + "li:nth-child"+ "(" + i.toString() + ")").removeClass('active');
+					$(this._defaults.paginationClass + " " + "li:nth-child"+ "(" + i.toString() + ")").removeClass("active");
 				}
-				$(this._defaults.paginationClass + " " + "li:nth-child"+ "(" + currentSlideNumber.toString() + ")").addClass('active');
+				$(this._defaults.paginationClass + " " + "li:nth-child"+ "(" + currentSlideNumber.toString() + ")").addClass("active");
 				this.slideParameters.setCurrentSlideNumber.call(this, currentSlideNumber);
+			},
+			positionPagination: function() {
+				var numberOfSlides = this.slideParameters.getNumberOfSlides.call(this);
+				var marginLeft = -(numberOfSlides*(this.convertStringToInteger(this._defaults.paginationWidth)) + (numberOfSlides-1)*(this.convertStringToInteger(this._defaults.paginationSpacing)))/2;
+				
+				$(this._defaults.paginationClass).css("margin-left", marginLeft);
 			},
 			slideParameters: {
 				setCurrentSlideNumber: function(currentSlideNumber) {
@@ -114,24 +124,27 @@
 					return this.currentSlideNumber;
 				},
 				getNumberOfSlides: function() {
-					return $(this._defaults.slidesClass).children().length
+					return $(this._defaults.slidesClass).children().length;
 				},
 				getSlideWidth: function() {
-					return $(this._defaults.slidesClass + " " + "li").width()
+					return $(this._defaults.slidesClass + " " + "li").width();
 				},
 				getMaxSlideDistance: function() {
-					return ((this.getNumberOfSlides()-1)*this.getSlideWidth())
+					return ((this.getNumberOfSlides()-1)*this.getSlideWidth());
 				},
 				getMaxSlidePercentage: function() {
-					return this.slideParameters.getNumberOfSlides.call(this)*100
+					return this.slideParameters.getNumberOfSlides.call(this)*100;
 				},
 			},
 			convertStringToInteger: function(string) {
-				return parseInt((string).replace(/[^0-9.]/g, ''))
+				return parseInt((string).replace(/[^0-9.]/g, ""));
 			},
 			setProperties: function() {
-				$(this._defaults.slidesClass).css('width', this.slideParameters.getMaxSlidePercentage.call(this).toString()+"%");
-				$(this._defaults.slidesClass+" "+"li").css('width', (100/this.slideParameters.getNumberOfSlides.call(this).toString()+"%"))
+				$(this._defaults.slidesClass).css("width", this.slideParameters.getMaxSlidePercentage.call(this).toString()+"%");
+				$(this._defaults.slidesClass+" "+"li").css("width", (100/this.slideParameters.getNumberOfSlides.call(this).toString()+"%"));
+				$(this._defaults.paginationClass+" "+"li").css({
+					"margin-right": this.settings.paginationSpacing, "width": this.settings.paginationWidth, 
+					"height": this.settings.paginationWidth, "border-radius": "9999px"});
 			}
 		});
 

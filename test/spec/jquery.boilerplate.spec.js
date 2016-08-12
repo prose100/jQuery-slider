@@ -51,31 +51,18 @@
 		assert.deepEqual(
 			pluginData.settings,
 			{
-				propertyName: "value",
-				foo: "bar"
+	          	foo: "bar",				
+				slideSpeed: 500,
+	          	paginationWidth: "30px",
+	          	paginationHeight: "30px",
+				paginationSpacing: "15px",
+				controlsClass: ".controls",
+	          	paginationClass: ".pagination",
+	          	slidesClass: ".slides",
 			},
 			"extend plugin settings"
 		);
 
 	} );
-
-	QUnit.test( "changes the element text", function( assert ) {
-		$fixture.defaultPluginName();
-
-		assert.equal( $fixture.text(), "jQuery Boilerplate" );
-	} );
-
-	QUnit.test(
-		"has #yourOtherFunction working as expected",
-		function( assert ) {
-			$fixture.defaultPluginName();
-
-			var instance = $fixture.data( "plugin_defaultPluginName" ),
-				expectedText = "foobar";
-
-			instance.yourOtherFunction( expectedText );
-			assert.equal( $fixture.text(), expectedText );
-		}
-	);
 
 }( jQuery, QUnit ) );

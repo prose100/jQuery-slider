@@ -1,4 +1,5 @@
 
+/*x2,3*/
 
 #slider {
 	width: 50%;
@@ -6,14 +7,17 @@
 	position: relative;
 }
 
+/*x*/
 .slides {
 	position: relative;
 }
 
+/*x*/
 #slider .slides li {
-	float: left;
+	float: left; 
 }
 
+/*x*/
 .controls li {
 	position: absolute;
 	cursor: pointer;
@@ -21,27 +25,26 @@
 	margin-top: -30px;
 }
 
+/*x*/
 .controls li:nth-child(2) {
 	right: 0;
 }
 
 .pagination	{
 	position: absolute;
-	bottom: 15px;
+	bottom: 25px;
 	left: 50%;
-	margin-left: -60px;
 }
 
+/*x*/
+/*background-color*/
 .pagination li {
 	float: left;
-	width: 12px;	
-	height: 12px;
 	background-color: #ddd;
-	border-radius: 12px;
 	cursor: pointer;
-	margin-right: 15px;
 }
 
+/*active background-color*/
 .pagination li.active {
 	background-color: #000;
 }

@@ -23,14 +23,14 @@ module.exports = function( grunt ) {
 				banner: "<%= meta.banner %>"
 			},
 			dist: {
-				src: [ "src/jquery.boilerplate.js" ],
+				src: [ "src/js/jquery.boilerplate.js" ],
 				dest: "dist/jquery.boilerplate.js"
 			}
 		},
 
 		// Lint definitions
 		jshint: {
-			files: [ "src/jquery.boilerplate.js", "test/**/*" ],
+			files: [ "src/js/jquery.boilerplate.js", "test/**/*" ],
 			options: {
 				jshintrc: ".jshintrc"
 			}
@@ -58,7 +58,7 @@ module.exports = function( grunt ) {
 		coffee: {
 			compile: {
 				files: {
-					"dist/jquery.boilerplate.js": "src/jquery.boilerplate.coffee"
+					"dist/jquery.boilerplate.js": "src/js/jquery.boilerplate.coffee"
 				}
 			}
 		},
@@ -80,14 +80,34 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// grunt-express will serve the files from the folders listed in `bases`
+	    // on specified `port` and `hostname`
+	    express: {
+	      all: {
+	        options: {
+	          port: 5000,
+	          hostname: "0.0.0.0",
+	          bases: ['src/'],
+	          livereload: true
+	        }
+	      }
+	    },
+
 		// watch for changes to source
 		// Better than calling grunt a million times
 		// (call 'grunt watch')
 		watch: {
-			files: [ "src/*", "test/**/*" ],
-			tasks: [ "default" ]
-		}
+			files: [ "src/**/*", "test/**/*" ],
+			tasks: [ "jshint", "build", "karma:unit:run" ]
+		},
 
+		// grunt-open will open your browser at the project's URL
+	    open: {
+	      all: {
+	        // Gets the port from the connect configuration
+	        path: 'http://localhost:<%= express.all.options.port%>'
+	      }
+	    }
 	} );
 
 	grunt.loadNpmTasks( "grunt-contrib-concat" );
@@ -96,10 +116,12 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( "grunt-contrib-uglify" );
 	grunt.loadNpmTasks( "grunt-contrib-coffee" );
 	grunt.loadNpmTasks( "grunt-contrib-watch" );
+	grunt.loadNpmTasks( "grunt-express" );
+	grunt.loadNpmTasks( "grunt-open" );
 	grunt.loadNpmTasks( "grunt-karma" );
-
+	
 	grunt.registerTask( "travis", [ "jshint", "karma:travis" ] );
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
 	grunt.registerTask( "build", [ "concat", "uglify" ] );
-	grunt.registerTask( "default", [ "jshint", "build", "karma:unit:run" ] );
+	grunt.registerTask( "default", [ "jshint", "build", "express", "open", "karma:unit:run", "watch" ] );
 };
