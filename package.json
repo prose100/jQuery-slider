@@ -1,43 +1,21 @@
 {
-  "name": "jquery-boilerplate",
-  "version": "4.1.0",
-  "description": "A jump-start for jQuery plugins development.",
+  "name": "easySlider",
+  "version": "1.0",
+  "description": "Light-weight, responsive slider.",
   "keywords": [
-    "jquery-plugin",
-    "jquery",
-    "boilerplate",
-    "plugins"
+    "Light-weight",
+    "slider",
+    "responsive",
+    "plugin"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/jquery-boilerplate/jquery-boilerplate.git"
-  },
-  "bugs": {
-    "url": "https://github.com/jquery-boilerplate/jquery-boilerplate/issues"
+    "url": "https://github.com/prose100/jQuery-slider.git"
   },
   "author": {
-    "name": "Zeno Rocha",
-    "email": "zno.rocha@gmail.com",
-    "url": "https://github.com/zenorocha"
+    "name": "Paul Rose",
+    "url": "https://github.com/prose100"
   },
-  "homepage": "http://jqueryboilerplate.com",
-  "contributors": [
-    {
-      "name": "Zeno Rocha",
-      "email": "zno.rocha@gmail.com",
-      "url": "https://github.com/zenorocha"
-    },
-    {
-      "name": "Addy Osmani",
-      "email": "addyosmani@gmail.com",
-      "url": "https://github.com/addyosmani"
-    },
-    {
-      "name": "Helder Santana",
-      "email": "heldr@me.com",
-      "url": "https://github.com/heldr"
-    }
-  ],
   "license": "MIT",
   "dependencies": {
     "jquery": ">=1.5.1"

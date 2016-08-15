@@ -24,7 +24,7 @@ module.exports = function( grunt ) {
 			},
 			dist: {
 				src: [ "src/js/easySlider.js" ],
-				dest: "dist/jquery.boilerplate.js"
+				dest: "dist/easySlider.js"
 			}
 		},
 
@@ -46,8 +46,8 @@ module.exports = function( grunt ) {
 		// Minify definitions
 		uglify: {
 			dist: {
-				src: [ "dist/jquery.boilerplate.js" ],
-				dest: "dist/jquery.boilerplate.min.js"
+				src: [ "dist/easySlider.js" ],
+				dest: "dist/easySlider.min.js"
 			},
 			options: {
 				banner: "<%= meta.banner %>"
@@ -58,7 +58,7 @@ module.exports = function( grunt ) {
 		coffee: {
 			compile: {
 				files: {
-					"dist/jquery.boilerplate.js": "src/js/easySlider.coffee"
+					"dist/easySlider.js": "src/js/easySlider.coffee"
 				}
 			}
 		},
