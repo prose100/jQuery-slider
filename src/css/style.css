@@ -1,63 +1,42 @@
 
-/*x2,3*/
+/*--------------SLIDER----------------*/
 
 #slider {
 	width: 50%;
-	overflow: hidden;
-	position: relative;
+	margin: 0 auto;
 }
 
-/*x*/
-.slides {
-	position: relative;
-}
 
-/*x*/
-#slider .slides li {
-	float: left; 
-}
+/*--------------CONTROLS--------------*/
 
-/*x*/
+/*position controls*/
 .controls li {
-	position: absolute;
-	cursor: pointer;
 	top: 50%;
-	margin-top: -30px;
+	margin-top: -30px
 }
 
-/*x*/
+.controls li:nth-child(1) {
+	left: 0;
+}
+
 .controls li:nth-child(2) {
 	right: 0;
 }
 
-.pagination	{
-	position: absolute;
-	bottom: 25px;
-	left: 50%;
-}
 
-/*x*/
-/*background-color*/
+/*------------PAGINATION------------*/
+
+/*style pagination*/
 .pagination li {
-	float: left;
 	background-color: #ddd;
-	cursor: pointer;
 }
 
-/*active background-color*/
 .pagination li.active {
 	background-color: #000;
 }
 
-/* ---------------------------------------------
-  Helper
------------------------------------------------- */
 
-.clearfix:after {
-	display: table;
-	content: "";
-	clear: both;
-}
+/*-------------HELPERS----------------*/
 
 .responsive {
 	width: 100%;

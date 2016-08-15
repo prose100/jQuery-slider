@@ -17,12 +17,12 @@
 		var pluginName = "defaultPluginName",
 			defaults = {
 				slideSpeed: 500,
-				paginationWidth: "30px",
-				paginationHeight: "30px",
 				paginationSpacing: "15px",
+				paginationDiameter: "12px",
+				paginationPositionFromBottom: "20px",
 				controlsClass: ".controls",
 				slidesClass: ".slides",
-				paginationClass: ".pagination",
+				paginationClass: ".pagination"
 			};
 
 		// The actual plugin constructor
@@ -63,12 +63,12 @@
 								function() {
 									if (_this.slideParameters.getCurrentSlideNumber.call(_this) === _this.slideParameters.getNumberOfSlides.call(_this)) {
 										//go to first slide, when slideshow has reached max distance
-										$(this.settings.slidesClass).animate({right: "0%"}, _this.settings.slideSpeed);
+										$(_this.settings.slidesClass).animate({right: "0%"}, _this.settings.slideSpeed);
 										_this.slideParameters.setCurrentSlideNumber.call(_this, 1);
 										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
 									} else {
 										//go to next slide
-										$(this.settings.slidesClass).animate({right: "+=100%"}, _this.settings.slideSpeed);
+										$(_this.settings.slidesClass).animate({right: "+=100%"}, _this.settings.slideSpeed);
 										_this.slideParameters.setCurrentSlideNumber.call(_this, _this.slideParameters.getCurrentSlideNumber.call(_this)+1);
 										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
 									}
@@ -80,12 +80,12 @@
 								function() {
 									if (_this.slideParameters.getCurrentSlideNumber.call(_this) === 1) {
 										//go to first slide, when slideshow has reached max distance
-										$(this.settings.slidesClass).animate({right: (_this.slideParameters.getMaxSlidePercentage.call(_this)-100).toString()+"%"}, _this.settings.slideSpeed);
+										$(_this.settings.slidesClass).animate({right: (_this.slideParameters.getMaxSlidePercentage.call(_this)-100).toString()+"%"}, _this.settings.slideSpeed);
 										_this.slideParameters.setCurrentSlideNumber.call(_this, _this.slideParameters.getNumberOfSlides.call(_this));
 										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
 									} else {
 										//go to next slide
-										$(this.settings.slidesClass).animate({right: "-=100%"}, _this.settings.slideSpeed);
+										$(_this.settings.slidesClass).animate({right: "-=100%"}, _this.settings.slideSpeed);
 										_this.slideParameters.setCurrentSlideNumber.call(_this, _this.slideParameters.getCurrentSlideNumber.call(_this)-1);
 										_this.paginate(_this.slideParameters.getCurrentSlideNumber.call(_this));
 									}
@@ -96,7 +96,7 @@
 							$(this.settings.paginationClass + " " + "li").click(
 								function() {
 									var currentSlideNumber = $(this).index()+1;
-									$(this.settings.slidesClass).animate({right: ((currentSlideNumber-1)*100).toString()+"%"}, 500);
+									$(_this.settings.slidesClass).animate({right: ((currentSlideNumber-1)*100).toString()+"%"}, 500);
 									_this.paginate(currentSlideNumber);
 								});
 				}
@@ -112,9 +112,9 @@
 			},
 			positionPagination: function() {
 				var numberOfSlides = this.slideParameters.getNumberOfSlides.call(this);
-				var marginLeft = -(numberOfSlides*(this.convertStringToInteger(this._defaults.paginationWidth)) + (numberOfSlides-1)*(this.convertStringToInteger(this._defaults.paginationSpacing)))/2;
+				var marginLeft = -(numberOfSlides*(this.convertStringToInteger(this.settings.paginationDiameter)) + (numberOfSlides-1)*(this.convertStringToInteger(this.settings.paginationSpacing)))/2;
 				
-				$(this._defaults.paginationClass).css("margin-left", marginLeft);
+				$(this.settings.paginationClass).css("margin-left", marginLeft);
 			},
 			slideParameters: {
 				setCurrentSlideNumber: function(currentSlideNumber) {
@@ -140,11 +140,37 @@
 				return parseInt((string).replace(/[^0-9.]/g, ""));
 			},
 			setProperties: function() {
-				$(this._defaults.slidesClass).css("width", this.slideParameters.getMaxSlidePercentage.call(this).toString()+"%");
-				$(this._defaults.slidesClass+" "+"li").css("width", (100/this.slideParameters.getNumberOfSlides.call(this).toString()+"%"));
-				$(this._defaults.paginationClass+" "+"li").css({
-					"margin-right": this.settings.paginationSpacing, "width": this.settings.paginationWidth, 
-					"height": this.settings.paginationWidth, "border-radius": "9999px"});
+				$("#slider").css({
+					"position": "relative",
+					"overflow": "hidden"
+					});
+				$(this.settings.slidesClass).css({
+					"position": "relative",
+					"width": this.slideParameters.getMaxSlidePercentage.call(this).toString()+"%"
+					});
+				$(this.settings.controlsClass).css({
+					"cursor": "pointer"
+					});
+				$(this.settings.controlsClass+" "+"li").css({
+					"position": "absolute"
+					});
+				$(this.settings.slidesClass+" "+"li").css({
+					"width": 100/this.slideParameters.getNumberOfSlides.call(this).toString()+"%",
+					"float": "left"
+					});
+				$(this.settings.paginationClass).css({
+					"position": "relative",
+					"left": "50%",
+					"bottom": this.settings.paginationPositionFromBottom
+					});
+				$(this.settings.paginationClass+" "+"li").css({
+					"margin-right": this.settings.paginationSpacing,
+					"float": "left",
+					"cursor": "pointer",
+					"width": this.settings.paginationDiameter,
+					"height": this.settings.paginationDiameter,
+					"border-radius": "9999px"
+					});
 			}
 		});
 

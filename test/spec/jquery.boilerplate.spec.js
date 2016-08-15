@@ -53,12 +53,12 @@
 			{
 	          	foo: "bar",				
 				slideSpeed: 500,
-	          	paginationWidth: "30px",
-	          	paginationHeight: "30px",
 				paginationSpacing: "15px",
+				paginationDiameter: "12px",
+				paginationPositionFromBottom: "20px",
 				controlsClass: ".controls",
-	          	paginationClass: ".pagination",
-	          	slidesClass: ".slides",
+				slidesClass: ".slides",
+				paginationClass: ".pagination"
 			},
 			"extend plugin settings"
 		);
