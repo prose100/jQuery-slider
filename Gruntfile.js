@@ -23,14 +23,14 @@ module.exports = function( grunt ) {
 				banner: "<%= meta.banner %>"
 			},
 			dist: {
-				src: [ "src/js/jquery.boilerplate.js" ],
+				src: [ "src/js/easySlider.js" ],
 				dest: "dist/jquery.boilerplate.js"
 			}
 		},
 
 		// Lint definitions
 		jshint: {
-			files: [ "src/js/jquery.boilerplate.js", "test/**/*" ],
+			files: [ "src/js/easySlider.js", "test/**/*" ],
 			options: {
 				jshintrc: ".jshintrc"
 			}
@@ -58,7 +58,7 @@ module.exports = function( grunt ) {
 		coffee: {
 			compile: {
 				files: {
-					"dist/jquery.boilerplate.js": "src/js/jquery.boilerplate.coffee"
+					"dist/jquery.boilerplate.js": "src/js/easySlider.coffee"
 				}
 			}
 		},

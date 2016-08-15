@@ -14,7 +14,7 @@
 		// minified (especially when both are regularly referenced in your plugin).
 
 		// Create the defaults once
-		var pluginName = "defaultPluginName",
+		var pluginName = "easySlider",
 			defaults = {
 				slideSpeed: 500,
 				paginationSpacing: "15px",

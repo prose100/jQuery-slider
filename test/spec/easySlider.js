@@ -22,31 +22,31 @@
 
 	QUnit.test( "is inside jQuery library", function( assert ) {
 
-		assert.equal( typeof $.fn.defaultPluginName, "function", "has function inside jquery.fn" );
-		assert.equal( typeof $fixture.defaultPluginName, "function", "another way to test it" );
+		assert.equal( typeof $.fn.easySlider, "function", "has function inside jquery.fn" );
+		assert.equal( typeof $fixture.easySlider, "function", "another way to test it" );
 	} );
 
 	QUnit.test( "returns jQuery functions after called (chaining)", function( assert ) {
 		assert.equal(
-			typeof $fixture.defaultPluginName().on,
+			typeof $fixture.easySlider().on,
 			"function",
 			"'on' function must exist after plugin call" );
 	} );
 
 	QUnit.test( "caches plugin instance", function( assert ) {
-		$fixture.defaultPluginName();
+		$fixture.easySlider();
 		assert.ok(
-			$fixture.data( "plugin_defaultPluginName" ),
+			$fixture.data( "plugin_easySlider" ),
 			"has cached it into a jQuery data"
 		);
 	} );
 
 	QUnit.test( "enable custom config", function( assert ) {
-		$fixture.defaultPluginName( {
+		$fixture.easySlider( {
 			foo: "bar"
 		} );
 
-		var pluginData = $fixture.data( "plugin_defaultPluginName" );
+		var pluginData = $fixture.data( "plugin_easySlider" );
 
 		assert.deepEqual(
 			pluginData.settings,
