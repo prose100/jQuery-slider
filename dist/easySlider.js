@@ -42,7 +42,7 @@
 			// is generally empty as we don't want to alter the default options for
 			// future instances of the plugin
 			this.settings = $.extend({}, defaults, options);
-			this._defaults = defaults;
+			this._default = defaults;
 			this._name = pluginName;
 			this.init();
 		}
@@ -59,6 +59,7 @@
 				// call them like the example below
 				this.setProperties();
 				this.positionPagination();
+				this.positionControls();
 				this.slideParameters.setCurrentSlideNumber.call(this, 1);
 				this.events.clickRight.call(this);
 				this.events.clickLeft.call(this);
@@ -113,9 +114,9 @@
 				var i;
 				var total = this.slideParameters.getNumberOfSlides.call(this);
 				for (i=1; i<=total; i++) {
-					$(this._defaults.paginationClass + " " + "li:nth-child"+ "(" + i.toString() + ")").removeClass("active");
+					$(this.settings.paginationClass + " " + "li:nth-child"+ "(" + i.toString() + ")").removeClass("active");
 				}
-				$(this._defaults.paginationClass + " " + "li:nth-child"+ "(" + currentSlideNumber.toString() + ")").addClass("active");
+				$(this.settings.paginationClass + " " + "li:nth-child"+ "(" + currentSlideNumber.toString() + ")").addClass("active");
 				this.slideParameters.setCurrentSlideNumber.call(this, currentSlideNumber);
 			},
 			positionPagination: function() {
@@ -123,6 +124,12 @@
 				var marginLeft = -(numberOfSlides*(this.convertStringToInteger(this.settings.paginationDiameter)) + (numberOfSlides-1)*(this.convertStringToInteger(this.settings.paginationSpacing)))/2;
 				
 				$(this.settings.paginationClass).css("margin-left", marginLeft);
+			},
+			positionControls: function() {
+				var heightDiff = (this.slideParameters.getSliderHeight.call(this)-this.slideParameters.getSlideHeight.call(this))/2;
+				var halfHeightControl = $(this.settings.controlsClass + " " + "li").css("margin-top");
+				
+				$(this.settings.controlsClass + " " + "li").css("margin-top", (-(this.convertStringToInteger.call(this, halfHeightControl))-heightDiff)+"px");
 			},
 			slideParameters: {
 				setCurrentSlideNumber: function(currentSlideNumber) {
@@ -132,10 +139,16 @@
 					return this.currentSlideNumber;
 				},
 				getNumberOfSlides: function() {
-					return $(this._defaults.slidesClass).children().length;
+					return $(this.settings.slidesClass).children().length;
 				},
 				getSlideWidth: function() {
-					return $(this._defaults.slidesClass + " " + "li").width();
+					return $(this.settings.slidesClass + " " + "li").width();
+				},
+				getSlideHeight: function() {
+					return $(this.settings.slidesClass + " " + "li").height();
+				},
+				getSliderHeight: function() {
+					return $(this.element).height();
 				},
 				getMaxSlideDistance: function() {
 					return ((this.getNumberOfSlides()-1)*this.getSlideWidth());
@@ -169,7 +182,8 @@
 				$(this.settings.paginationClass).css({
 					"position": "relative",
 					"left": "50%",
-					"bottom": this.settings.paginationPositionFromBottom
+					"bottom": this.settings.paginationPositionFromBottom,
+					"margin": 0
 					});
 				$(this.settings.paginationClass+" "+"li").css({
 					"margin-right": this.settings.paginationSpacing,

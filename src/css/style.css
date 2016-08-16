@@ -42,3 +42,9 @@
 	width: 100%;
 	height: auto;
 }
+
+.clearfix:after {
+	content: "";
+	display: table;
+	clear: both;
+}
