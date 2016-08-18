@@ -12,9 +12,9 @@ The jQuery-slider Plugin provides a simple, adaptable slideshow that is responsi
 style.css can be modified to fit a website design
 
     <link href="css/style.css">
-    <script src="js/easySlider.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/
                  jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/easySlider.js"></script>
 
 ####Menu Markup
 
