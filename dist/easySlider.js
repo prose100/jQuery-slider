@@ -129,7 +129,7 @@
 				var heightDiff = (this.slideParameters.getSliderHeight.call(this)-this.slideParameters.getSlideHeight.call(this))/2;
 				var halfHeightControl = $(this.settings.controlsClass + " " + "li").css("margin-top");
 				
-				$(this.settings.controlsClass + " " + "li").css("margin-top", (-(this.convertStringToInteger.call(this, halfHeightControl))-heightDiff)+"px");
+				$(this.settings.controlsClass + " " + "li").css("margin-top", ((this.convertStringToInteger(halfHeightControl))-heightDiff)+"px");
 			},
 			slideParameters: {
 				setCurrentSlideNumber: function(currentSlideNumber) {
@@ -150,15 +150,12 @@
 				getSliderHeight: function() {
 					return $(this.element).height();
 				},
-				getMaxSlideDistance: function() {
-					return ((this.getNumberOfSlides()-1)*this.getSlideWidth());
-				},
 				getMaxSlidePercentage: function() {
 					return this.slideParameters.getNumberOfSlides.call(this)*100;
 				},
 			},
 			convertStringToInteger: function(string) {
-				return parseInt((string).replace(/[^0-9.]/g, ""));
+				return parseInt(string);
 			},
 			setProperties: function() {
 				$("#slider").css({
