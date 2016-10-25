@@ -53,9 +53,10 @@ Visit [jQuery-slider Plugin](http://www.paultrose.com/blogJul16.html) for descri
 ```
 $(".nav-menu").mobilemenu({
     slideSpeed: 500,
+    autoSlide: true,
 	paginationSpacing: "15px",
 	paginationDiameter: "12px",
-	paginationPositionFromBottom: "20px",
+	paginationPositionFromBottom: "0px",
 	controlsClass: ".controls",
 	slidesClass: ".slides",
 	paginationClass: ".pagination"

@@ -17,7 +17,7 @@
 		var pluginName = "easySlider",
 			defaults = {
 				slideSpeed: 500,
-				automatic: true,
+				autoSlide: true,
 				paginationSpacing: "15px",
 				paginationDiameter: "12px",
 				paginationPositionFromBottom: "0px",
@@ -54,7 +54,7 @@
 				this.positionPagination();
 				this.slideParameters.setCurrentSlideNumber.call(this, 1);
 
-				if (this.settings.automatic === true) {
+				if (this.settings.autoSlide === true) {
 					this.slideParameters.setAutoStatus.call(this, true);
 					this.animations.autoSlide.call(this);
 				} else {
