@@ -53,9 +53,10 @@
 			{
 	          	foo: "bar",				
 				slideSpeed: 500,
+				automatic: true,
 				paginationSpacing: "15px",
 				paginationDiameter: "12px",
-				paginationPositionFromBottom: "20px",
+				paginationPositionFromBottom: "0px",
 				controlsClass: ".controls",
 				slidesClass: ".slides",
 				paginationClass: ".pagination"

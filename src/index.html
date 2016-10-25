@@ -8,11 +8,11 @@
 	</head>
 	<body>
 		<div id="slider">
-			<ul class="slides clearfix">
-				<li><img class="responsive" src="http://placehold.it/350x150"></li>
-				<li><img class="responsive" src="http://placehold.it/350x150"></li>
-				<li><img class="responsive" src="http://placehold.it/350x150"></li>
-				<li><img class="responsive" src="http://placehold.it/350x150"></li>
+			<ul class="slides">
+				<li><img class="responsive" src="http://placehold.it/355x250"></li>
+				<li><img class="responsive" src="http://placehold.it/355x250"></li>
+				<li><img class="responsive" src="http://placehold.it/355x250"></li>
+				<li><img class="responsive" src="http://placehold.it/355x250"></li>
 			</ul>
 			<ul class="controls">
 				<li><img src="img/prev.png" alt="previous"></li>
@@ -25,6 +25,7 @@
 				<li></li>
 			</ul>
 		</div>
+
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="js/easySlider.js"></script>
@@ -32,9 +33,10 @@
 			$(function() {
 				$("#slider").easySlider( {
 					slideSpeed: 500,
+					automatic: true,
 					paginationSpacing: "15px",
-					paginationDiameter: "12px",
-					paginationPositionFromBottom: "20px",
+					paginationDiameter: "10px",
+					paginationPositionFromBottom: "0px",
 					slidesClass: ".slides",
 					controlsClass: ".controls",
 					paginationClass: ".pagination"					
